@@ -15,12 +15,12 @@ function cuotas(subasta) {
     while(opcion_cuotas !=="CANCELAR"){
     switch (opcion_cuotas) {
         case "1":
-            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 3 cuotas con 10% de interés. \n Su interés mensual es de $ " + parseInt(subasta*0.1/12) +".  \n El valor final de su subasta es de $" + parseInt(subasta*1.1));
+            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 3 cuotas con 10% de interés. \n Su interés mensual es de $ " + parseInt(subasta*0.1/3) +".  \n El valor final de su subasta es de $" + parseInt(subasta*1.1));
             alert("Ahora será redirigido a la web para realizar los pagos")
             location.href="https://www.mercadopago.com.ar/home"
                     break;
         case "2":
-            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 6 cuotas con 20% de interés." + "Su interés mensual es de " + parseInt(subasta*0.2/12) +". El valor final de su subasta es de $" + parseInt(subasta*1.2))
+            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 6 cuotas con 20% de interés." + "Su interés mensual es de " + parseInt(subasta*0.2/6) +". El valor final de su subasta es de $" + parseInt(subasta*1.2))
             alert("Ahora será redirigido a la web para realizar los pagos")
             location.href="https://www.mercadopago.com.ar/home"
         break;
