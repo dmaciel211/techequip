@@ -137,6 +137,6 @@ function borrarCarrito() {
     suma = 0
     alert("Su carrito se ha vaciado.")
 }else{
-    "No hay nada que borrar."
+    alert("No hay nada que borrar.")
 }
 }
