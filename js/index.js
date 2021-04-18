@@ -1,40 +1,137 @@
+// Definiciones generales
 
+let subtotalProductos = [];
+let carritoProductos = [];
+let suma = 0
 
-function cuotas(subasta) {
-     let nombre = prompt("¿Cuál es tu nombre?")
-
-    subasta = parseFloat(prompt("Bienvenido " + nombre + ".  \nIngresa el monto a subastar."))
-
-    while (subasta < 10000) {
-        alert("La base mínima es de $ 10.000")
-        subasta = parseFloat(prompt("Diego, ingresa el monto a subastar."))
+class Producto {
+    constructor(id, descripcion, precio) {
+        this.id = "ID " + id,
+            this.descripcion = "Descripción " + descripcion,
+            this.precio = "Precio " + precio
     }
-    alert(nombre + " Ingresaste $ " + subasta)
-    opcion_cuotas = prompt("Diego tus opciones de cuotas son: \n 1. Tres cuotas (10% Interés),  \n 2. Seis cuotas (20% interés), \n 3.Ahora Doce (30% Interés).  \n Ingrese la opción seleccionada.")
-
-    while(opcion_cuotas !=="CANCELAR"){
-    switch (opcion_cuotas) {
-        case "1":
-            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 3 cuotas con 10% de interés. \n Su interés mensual es de $ " + parseInt(subasta*0.1/3) +".  \n El valor final de su subasta es de $" + parseInt(subasta*1.1));
-            alert("Ahora será redirigido a la web para realizar los pagos")
-            location.href="https://www.mercadopago.com.ar/home"
-                    break;
-        case "2":
-            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 6 cuotas con 20% de interés." + "Su interés mensual es de " + parseInt(subasta*0.2/6) +". El valor final de su subasta es de $" + parseInt(subasta*1.2))
-            alert("Ahora será redirigido a la web para realizar los pagos")
-            location.href="https://www.mercadopago.com.ar/home"
-        break;
-
-        case "3":
-            alert("Su monto a subastar es $ " + subasta + " \n Su elección de pago es 12 cuotas con 30% de interés." + "Su interés mensual es de " + parseInt(subasta*0.3/12) +". El valor final de su subasta es de $" + parseInt(subasta*1.3))
-            alert("Ahora será redirigido a la web para realizar los pagos")
-            location.href="https://www.mercadopago.com.ar/home"
-        break;
-
-        default:
-            alert("La opción ingresada no es correcta por favor ingrese nuevamente su elección en cuotas")
-            }
-     break
+    confirmacion() {
+        alert(`Usted ha agregado
+    ${this.id}
+    ${this.descripcion}
+    ${this.precio}`)
+    }
 }
 
+
+producto1 = new Producto(100, "Intel I9 10900", 45000),
+    producto1precio = 45000
+
+producto2 = new Producto(200, "Asus ROG Z390", 50000),
+    producto2precio = 50000
+
+producto3 = new Producto(300, "RTX 3080", 300000),
+    producto3precio = 300000
+
+
+//Agregar producto al carrito
+
+const agregarProductos = (producto) => {
+    carritoProductos.push(producto)
+}
+
+const agregarValores = (precio) => {
+    subtotalProductos.push(precio)
+}
+
+const microprocesador = () => {
+    agregarProductos(producto1)
+    agregarValores(producto1precio)
+    suma = subtotalProductos.reduce((acc, numero) => acc + numero);
+    producto1.confirmacion()
+}
+
+const motherboard = () => {
+    agregarProductos(producto2)
+    agregarValores(producto2precio)
+    suma = subtotalProductos.reduce((acc, numero) => acc + numero);
+    producto2.confirmacion()
+}
+
+const placaDeVideo = () => {
+    agregarProductos(producto3)
+    agregarValores(producto3precio)
+    suma = subtotalProductos.reduce((acc, numero) => acc + numero);
+    producto3.confirmacion()
+}
+
+// Finalizar Compra
+
+
+
+function pago(cuotas) {
+    cuotas = prompt(
+        `Por favor ingrese su método de pago
+    A) 1 Cuota sin interés.
+    B) 3 Cuotas con 15% de Interés.
+    C) 6 cuotas con 20% de Interés.
+    D) Ahora 12 con 18% de Interés.`, "A"
+    ).toLowerCase()
+
+
+    switch (cuotas) {
+
+        case "a":
+
+            alert(`Usted ha seleccionado la opción A) 1 Cuota sin interés.
+            El valor final de su compra es de $ ${suma}`)
+            alert('Será redirigido a la web de pagos.')
+            window.location.href = "https://www.mercadopago.com.ar"
+            break;
+
+        case "b":
+            alert(`Usted ha seleccionado la opción B) 3 Cuotas con 15% de Interés.
+                El subtotal de su compra es de $ ${suma}
+                Su interés es de $ ${parseFloat(suma/3).toFixed(2)}
+                El valor final de su compra es de $ ${parseFloat(suma*1.15).toFixed(2)}`)
+            alert('Será redirigido a la web de pagos.')
+            window.location.href = "https://www.mercadopago.com.ar"
+            break;
+
+        case "c":
+            alert(`Usted ha seleccionado la opción C) 6 cuotas con 20% de Interés.
+                    El subtotal de su compra es de $ ${suma}
+                    Su interés es de $ ${parseFloat(suma/6).toFixed(2)}
+                    El valor final de su compra es de $ ${parseFloat(suma*1.2).toFixed(2)}`)
+            alert('Será redirigido a la web de pagos.')
+            window.location.href = "https://www.mercadopago.com.ar"
+            break;
+
+        case "d":
+            alert(`Usted ha seleccionado la opción D) Ahora 12 con 18% de Interés.
+                        El subtotal de su compra es de $ ${suma}
+                        Su interés es de $ ${parseFloat(suma/12).toFixed(2)}
+                        El valor final de su compra es de $ ${parseFloat(suma*1.18).toFixed(2)}`)
+            alert('Será redirigido a la web de pagos.')
+            window.location.href = "https://www.mercadopago.com.ar"
+            break;
+
+        default:
+            alert(`Seleccione una opción correcta.`)
+            pago();
+
+    }
+
+
+}
+
+function finalizar() {
+    if (suma !== 0) {
+        alert("El total de su compra es $" + suma);
+        pago()
+           } else
+    alert("Usted no ha seleccionado ningun producto")
+    
+}
+
+
+function borrarCarrito() {
+    subtotalProductos = []
+    carritoProductos = []
+    suma = 0
 }
