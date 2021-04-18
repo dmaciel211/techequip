@@ -131,7 +131,12 @@ function finalizar() {
 
 
 function borrarCarrito() {
+    if(suma !== 0){
     subtotalProductos = []
     carritoProductos = []
     suma = 0
+    alert("Su carrito se ha vaciado.")
+}else{
+    "No hay nada que borrar."
+}
 }
