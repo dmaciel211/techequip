@@ -1,14 +1,13 @@
 // Definiciones generales
 
-let subtotalProductos = [];
 let carritoProductos = [];
 let suma = 0
 
 class Producto {
     constructor(id, descripcion, precio) {
-        this.id = "ID " + id,
-            this.descripcion = "Descripción " + descripcion,
-            this.precio = "Precio " + precio
+        this.id = id,
+            this.descripcion = descripcion,
+            this.precio = precio
     }
     confirmacion() {
         alert(`Usted ha agregado
@@ -18,47 +17,22 @@ class Producto {
     }
 }
 
-
-producto1 = new Producto(100, "Intel I9 10900", 45000),
-    producto1precio = 45000
-
-producto2 = new Producto(200, "Asus ROG Z390", 50000),
-    producto2precio = 50000
-
-producto3 = new Producto(300, "RTX 3080", 300000),
-    producto3precio = 300000
+producto1 = new Producto(100, "Intel I9 10900", 45000)
+producto2 = new Producto(200, "Asus ROG Z390", 50000)
+producto3 = new Producto(300, "RTX 3080", 300000)
 
 
-//Agregar producto al carrito
 
-const agregarProductos = (producto) => {
-    carritoProductos.push(producto)
-}
+    //Agregar producto al carrito
 
-const agregarValores = (precio) => {
-    subtotalProductos.push(precio)
-}
+    const agregarProductos = (producto) => {
+        carritoProductos.push(producto)
+        producto.confirmacion()
+        suma = carritoProductos.reduce( (acc, producto) => acc + producto.precio, 0)
+    }
+    
 
-const microprocesador = () => {
-    agregarProductos(producto1)
-    agregarValores(producto1precio)
-    suma = subtotalProductos.reduce((acc, numero) => acc + numero);
-    producto1.confirmacion()
-}
 
-const motherboard = () => {
-    agregarProductos(producto2)
-    agregarValores(producto2precio)
-    suma = subtotalProductos.reduce((acc, numero) => acc + numero);
-    producto2.confirmacion()
-}
-
-const placaDeVideo = () => {
-    agregarProductos(producto3)
-    agregarValores(producto3precio)
-    suma = subtotalProductos.reduce((acc, numero) => acc + numero);
-    producto3.confirmacion()
-}
 
 // Finalizar Compra
 
@@ -124,19 +98,18 @@ function finalizar() {
     if (suma !== 0) {
         alert("El total de su compra es $" + suma);
         pago()
-           } else
-    alert("Usted no ha seleccionado ningun producto")
-    
+    } else
+        alert("Usted no ha seleccionado ningun producto")
+
 }
 
 
 function borrarCarrito() {
-    if(suma !== 0){
-    subtotalProductos = []
-    carritoProductos = []
-    suma = 0
-    alert("Su carrito se ha vaciado.")
-}else{
-    alert("No hay nada que borrar.")
-}
+    if (suma !== 0) {
+        carritoProductos = []
+        suma = 0
+        alert("Su carrito se ha vaciado.")
+    } else {
+        alert("No hay nada que borrar.")
+    }
 }
