@@ -1,19 +1,23 @@
 // Definiciones generales
 
-let carritoProductos = [];
+let carritoProductos = JSON.parse(localStorage.getItem('carrito'))
+if (!carritoProductos) {
+    carritoProductos = []
+}
 let suma = 0
+/* 
+listaCompras = localStorage.setItem('listaCompras',listaCompras) */
+let listaCompras = document.getElementById('lista-compras')
+let totalCompras = document.getElementById('total-compras')
+
+
+
 
 class Producto {
     constructor(id, descripcion, precio) {
         this.id = id,
             this.descripcion = descripcion,
             this.precio = precio
-    }
-    confirmacion() {
-        alert(`Usted ha agregado
-    ${this.id}
-    ${this.descripcion}
-    ${this.precio}`)
     }
 }
 
@@ -23,19 +27,41 @@ producto3 = new Producto(300, "RTX 3080", 300000)
 
 
 
-    //Agregar producto al carrito
 
-    const agregarProductos = (producto) => {
-        carritoProductos.push(producto)
-        producto.confirmacion()
-        suma = carritoProductos.reduce( (acc, producto) => acc + producto.precio, 0)
+
+
+const mostrarCarrito = () => {
+    for (let i = 0; i < carritoProductos.length; i++) {
+        let itemCarrito = document.createElement('li')
+        itemCarrito.textContent = carritoProductos[i].descripcion + " $ " + carritoProductos[i].precio
     }
-    
+}
+
+
+
+
+//Agregar producto al carrito
+
+const agregarProductos = (producto) => {
+    carritoProductos.push(producto)
+    suma = carritoProductos.reduce((acc, producto) => acc + producto.precio, 0)
+    localStorage.setItem('carrito', JSON.stringify(carritoProductos))
+    let itemCarrito = document.createElement('li')
+    itemCarrito.textContent = producto.descripcion + " $ " + producto.precio
+    listaCompras.appendChild(itemCarrito)
+
+
+     let totalFinal = document.createElement('p')
+   totalCompras.innerHTML = '';
+    totalFinal.textContent = "Su total es $" + suma
+       totalCompras.appendChild(totalFinal)
+
+
+}
 
 
 
 // Finalizar Compra
-
 
 
 function pago(cuotas) {
@@ -98,18 +124,28 @@ function finalizar() {
     if (suma !== 0) {
         alert("El total de su compra es $" + suma);
         pago()
+        localStorage.removeItem('carrito', carritoProductos)
+        listaCompras.innerHTML = ""
+        totalCompras.innerHTML = '';
     } else
         alert("Usted no ha seleccionado ningun producto")
-
+    localStorage.removeItem('carrito')
 }
 
 
 function borrarCarrito() {
     if (suma !== 0) {
         carritoProductos = []
+        listaCompras.innerHTML = ""
+        totalCompras.innerHTML = '';
+
         suma = 0
         alert("Su carrito se ha vaciado.")
+
     } else {
         alert("No hay nada que borrar.")
     }
+
 }
+
+mostrarCarrito()

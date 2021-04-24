@@ -22,10 +22,12 @@
         <button class="btn-warning borrar card-producto__btn-card" onclick="borrarCarrito()">Borrar Carrito</button>
     </div>
     </header>
-    <main>
-      
-        <div class="container-fluid container-cards">
+    <main class="cotainer-fluid">
+        <div class="row">
+            
+            <div class="container-fluid container-cards col-8">
             <div class="row justify-content-center">
+                
                 <div class="card-group">
                     <div class="card card-producto col-md-4 col-sm-12">
                         <img src="img/microprocesador.jpg" class="card-img-top img-fluid" alt="...">
@@ -56,6 +58,25 @@
             </div>
         </div>
 
+        <aside class="col-2 container-fluid">
+            <div class="row">
+            <div class="carrito-compras">
+                <h2>Carrito de Compras</h2>
+     
+                    <ul id="lista-compras">
+
+                    </ul>
+                    <div id="total-compras">
+
+
+
+                    </div>
+
+            </div>
+        </div>
+        </aside>
+
+    </div>
     </main>
     <footer>
     </footer>
