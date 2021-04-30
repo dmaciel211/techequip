@@ -9,84 +9,80 @@
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="css/estilos.css">
     <title>TechEquip</title>
+    <script src="https://kit.fontawesome.com/ca3e8711c8.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-    <header>
+<header>
 
-        <h1>TechEquip</h1>
-
-        <h3>Equipamiento para PCs</h3>
-        <div class="container-btn-principal">
-        <button class="btn-danger comprar card-producto__btn-card" onclick="finalizar()">Finalizar Compra</button>
-        <button class="btn-warning borrar card-producto__btn-card" onclick="borrarCarrito()">Borrar Carrito</button>
-    </div>
-    </header>
-    <main class="cotainer-fluid">
-        <div class="row">
-            
-            <div class="container-fluid container-cards col-8">
-            <div class="row justify-content-center">
-                
-                <div class="card-group">
-                    <div class="card card-producto col-md-4 col-sm-12">
-                        <img src="img/microprocesador.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">INTEL I9 10900</h5>
-                            <p class="card-text">$ 45.000</p>   
-                            <button class="btn-primary card-producto__btn-card" onclick="agregarProductos(producto1)">Agregar al carrito</button>
-                        </div>
-                    </div>
-
-                    <div class="card card-producto col-md-4 col-sm-12">
-                        <img src="img/motherboard.jpg" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Asus ROG Z390</h5>
-                              <p class="card-text">$ 50.000</p>
-                            <button class="btn-primary card-producto__btn-card  " onclick="agregarProductos(producto2)">Agregar al carrito</button>
-                        </div>
-                    </div>
-                    <div class="card card-producto col-md-4 col-sm-12">
-                        <img src="img/placadevideo.png" class="card-img-top img-fluid" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">NVIDIA GEFORCE RTX 3080</h5>
-                                       <p class="card-text">$ 300.000</p>
-                            <button class="btn-primary card-producto__btn-card" onclick="agregarProductos(producto3)">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <aside class="col-2 container-fluid">
-            <div class="row">
-            <div class="carrito-compras">
-                <h2>Carrito de Compras</h2>
-     
-                    <ul id="lista-compras">
-
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="/img/logo.png" alt=""></a>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Dropdown link
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
-                    <div id="total-compras">
-
-
-
-                    </div>
-
-            </div>
+                  </li>
+            </ul>
+          </div>
+          <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="justify-content-end"id="boton-carrito"><i class="fas fa-shopping-cart"></i><span id="contadorCarrito">0</span></button>
         </div>
-        </aside>
+      </nav>
+</header>
 
-    </div>
+<div>
+<h3 style="text-align: left;">Ordenar por precio</h3>
+<select  id="precios">
+    <option value="all">Todos</option>
+    <option value="1">De menor a mayor</option>
+    <option value="2">De mayor a menor</option>
+</select>
+</div>
+    
+    <main id="contenedor-productos">
+
+    
+    
     </main>
-    <footer>
-    </footer>
 
 
+
+ <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content modal-carrito">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="carrito-contenedor">
+          ...
+        </div>
+        <p class="precioProducto">Precio total: $<span id="precioTotal"></span></p>
+        <div class="modal-footer">
+            <button onclick="borrarCarrito()"  class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver atrás</button>
+          <button type="button" class="btn btn-primary">Completar compra</button>
+        </div>
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous">
     </script>
-    <script language="JavaScript" type="text/javascript" src="js/index.js" defer></script>
+    <script language="JavaScript" src="js/stock.js" defer></script>
+    <script language="JavaScript" src="js/index.js" defer></script>
 
 </body>
 

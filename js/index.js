@@ -1,151 +1,141 @@
-// Definiciones generales
 
-let carritoProductos = JSON.parse(localStorage.getItem('carrito'))
-if (!carritoProductos) {
-    carritoProductos = []
-}
-let suma = 0
-/* 
-listaCompras = localStorage.setItem('listaCompras',listaCompras) */
-let listaCompras = document.getElementById('lista-compras')
-let totalCompras = document.getElementById('total-compras')
+//Declaraciones generales
+const contenedorProductos = document.getElementById('contenedor-productos')
+let carrito = []
+const contenedorCarrito = document.getElementById('carrito-contenedor')
+const precioTotal = document.getElementById('precioTotal')
+const contadorCarrito = document.getElementById('contadorCarrito')
 
+let carritoEnLS = JSON.parse( localStorage.getItem('carrito') )
+let contadorEnLs = JSON.parse( localStorage.getItem('contador') )
+let contenedorEnLs = JSON.parse( localStorage.getItem('contenedor') )
+let totalEnLs = JSON.parse( localStorage.getItem('total') )
 
+if (carritoEnLS) {
+    let continuar = confirm('Usted tiene productos agregados al carrito ¿Desea continuar con su última compra?')
 
-
-class Producto {
-    constructor(id, descripcion, precio) {
-        this.id = id,
-            this.descripcion = descripcion,
-            this.precio = precio
-    }
-}
-
-producto1 = new Producto(100, "Intel I9 10900", 45000)
-producto2 = new Producto(200, "Asus ROG Z390", 50000)
-producto3 = new Producto(300, "RTX 3080", 300000)
-
-
-
-
-
-
-const mostrarCarrito = () => {
-    for (let i = 0; i < carritoProductos.length; i++) {
-        let itemCarrito = document.createElement('li')
-        itemCarrito.textContent = carritoProductos[i].descripcion + " $ " + carritoProductos[i].precio
-    }
-}
-
-
-
-
-//Agregar producto al carrito
-
-const agregarProductos = (producto) => {
-    carritoProductos.push(producto)
-    suma = carritoProductos.reduce((acc, producto) => acc + producto.precio, 0)
-    localStorage.setItem('carrito', JSON.stringify(carritoProductos))
-    let itemCarrito = document.createElement('li')
-    itemCarrito.textContent = producto.descripcion + " $ " + producto.precio
-    listaCompras.appendChild(itemCarrito)
-
-
-     let totalFinal = document.createElement('p')
-   totalCompras.innerHTML = '';
-    totalFinal.textContent = "Su total es $" + suma
-       totalCompras.appendChild(totalFinal)
-
-
-}
-
-
-
-// Finalizar Compra
-
-
-function pago(cuotas) {
-    cuotas = prompt(
-        `Por favor ingrese su método de pago
-    A) 1 Cuota sin interés.
-    B) 3 Cuotas con 15% de Interés.
-    C) 6 cuotas con 20% de Interés.
-    D) Ahora 12 con 18% de Interés.`, "A"
-    ).toLowerCase()
-
-
-    switch (cuotas) {
-
-        case "a":
-
-            alert(`Usted ha seleccionado la opción A) 1 Cuota sin interés.
-            El valor final de su compra es de $ ${suma}`)
-            alert('Será redirigido a la web de pagos.')
-            window.location.href = "https://www.mercadopago.com.ar"
-            break;
-
-        case "b":
-            alert(`Usted ha seleccionado la opción B) 3 Cuotas con 15% de Interés.
-                El subtotal de su compra es de $ ${suma}
-                Su interés es de $ ${parseFloat(suma/3).toFixed(2)}
-                El valor final de su compra es de $ ${parseFloat(suma*1.15).toFixed(2)}`)
-            alert('Será redirigido a la web de pagos.')
-            window.location.href = "https://www.mercadopago.com.ar"
-            break;
-
-        case "c":
-            alert(`Usted ha seleccionado la opción C) 6 cuotas con 20% de Interés.
-                    El subtotal de su compra es de $ ${suma}
-                    Su interés es de $ ${parseFloat(suma/6).toFixed(2)}
-                    El valor final de su compra es de $ ${parseFloat(suma*1.2).toFixed(2)}`)
-            alert('Será redirigido a la web de pagos.')
-            window.location.href = "https://www.mercadopago.com.ar"
-            break;
-
-        case "d":
-            alert(`Usted ha seleccionado la opción D) Ahora 12 con 18% de Interés.
-                        El subtotal de su compra es de $ ${suma}
-                        Su interés es de $ ${parseFloat(suma/12).toFixed(2)}
-                        El valor final de su compra es de $ ${parseFloat(suma*1.18).toFixed(2)}`)
-            alert('Será redirigido a la web de pagos.')
-            window.location.href = "https://www.mercadopago.com.ar"
-            break;
-
-        default:
-            alert(`Seleccione una opción correcta.`)
-            pago();
-
-    }
-
-
-}
-
-function finalizar() {
-    if (suma !== 0) {
-        alert("El total de su compra es $" + suma);
-        pago()
-        localStorage.removeItem('carrito', carritoProductos)
-        listaCompras.innerHTML = ""
-        totalCompras.innerHTML = '';
-    } else
-        alert("Usted no ha seleccionado ningun producto")
-    localStorage.removeItem('carrito')
-}
-
-
-function borrarCarrito() {
-    if (suma !== 0) {
-        carritoProductos = []
-        listaCompras.innerHTML = ""
-        totalCompras.innerHTML = '';
-
-        suma = 0
-        alert("Su carrito se ha vaciado.")
-
+    if (continuar == true) {
+        carrito = carritoEnLS
+        contadorCarrito.innerText = contadorEnLs
+        contenedorCarrito.innerText = contenedorEnLs
+        precioTotal.innerText = totalEnLs
+        
     } else {
-        alert("No hay nada que borrar.")
-    }
+        localStorage.removeItem('carrito')
+     }
+}
+
+
+
+
+//Mostrar carrito al principio
+
+function mostrarProductos(array) {
+
+    contenedorProductos.innerHTML = ''
+
+    array.forEach((producto) => {
+    
+        let div = document.createElement('div')
+        div.classList.add('producto')
+        div.innerHTML = `
+                    <img class="img-fluid" src=${producto.imagen} alt="">
+                    <h3>${producto.descripcion}</h3>
+                    <p class="precioProducto">Precio: $${producto.precio}</p>
+                    <button onclick=agregarAlCarrito(${producto.id}) class="boton-agregar">Agregar <i class="fas fa-cart-plus"></i></button>
+        `
+        contenedorProductos.appendChild(div)
+    
+    })
 
 }
 
-mostrarCarrito()
+mostrarProductos(productos)
+
+
+
+//Agregar y actualizar el carrito
+
+function agregarAlCarrito(id) {
+    const productoElegido = productos.find( el => el.id == id )
+    if (productoElegido) {
+        carrito.push(productoElegido)   
+    }
+   
+    actualizarCarrito()
+}
+
+function eliminarProducto(id) {
+    const productoEliminar = carrito.find( el => el.id == id )
+    const indice = carrito.indexOf(productoEliminar)
+    carrito.splice(indice, 1)
+
+    actualizarCarrito()
+}
+
+
+
+
+
+function actualizarCarrito() {
+            
+    localStorage.setItem('carrito', JSON.stringify(carrito))
+           console.log(contadorCarrito)
+
+
+
+    contenedorCarrito.innerHTML = '' 
+
+    carrito.forEach((producto) => {
+        contenedorCarrito.innerHTML += `
+            <div class="productoEnCarrito">
+                <p>${producto.descripcion}</p>
+                <img class="img-fluid" style="max-height:100px" src=${producto.imagen} alt="">
+                <p>Precio: $${producto.precio}</p>
+                <button onclick=eli minarProducto(${producto.id})  class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+            </div>
+        `
+    })
+
+    precioTotal.innerText = carrito.reduce( (acc, el) => acc += el.precio, 0 )
+    contadorCarrito.innerText = carrito.length
+
+    localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerText))
+    localStorage.setItem('total', JSON.stringify(precioTotal.innerText))
+    localStorage.setItem('contador', JSON.stringify(contadorCarrito.innerText))
+
+   
+  
+ }
+
+
+//Filtrar por precios
+
+const ordenPrecios = document.getElementById('precios')
+
+ordenPrecios.addEventListener('change', ()=>{
+    if (ordenPrecios.value == 1) {
+        productos.sort( (a, b) => a.precio - b.precio )
+        mostrarProductos(productos)
+    } else if (ordenPrecios.value == 2) {
+        productos.sort( (a, b) => b.precio - a.precio )
+        mostrarProductos(productos)
+    } else {
+        productos.sort( (a, b) => a.id - b.id )
+        mostrarProductos(productos)
+    }
+})
+
+
+//Filtrar por tipo de producto
+
+//Borrar carrito
+
+function borrarCarrito(){
+    localStorage.clear()
+    contadorCarrito.innerText = ''
+    contenedorCarrito.innerHTML= ''
+    precioTotal.innerText = ''
+    carrito = []
+       }
+
