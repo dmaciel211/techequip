@@ -1,31 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body {
+  font-family: 'Jost', sans-serif; }
+
 * {
   margin: 0;
   padding: 0; }
 
-h1 {
-  text-align: center; }
+.producto {
+  max-width: 30%;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 2px 6px 3px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+  padding-bottom: 70px; }
+  .producto h3 {
+    font-size: 2.1vw;
+    width: 100%; }
+  .producto p {
+    font-size: 2vw; }
+  .producto .container-btn-del {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-items: center;
+    justify-content: center;
+    width: 100%; }
+    .producto .container-btn-del .boton-agregar {
+      width: 9vw;
+      min-width: 100px;
+      height: 40px; }
+      .producto .container-btn-del .boton-agregar:hover {
+        background-color: wheat; }
 
-h3 {
-  text-align: center; }
-
-.card-producto {
-  margin: 0 10px 0 10px;
-  text-align: center; }
-  .card-producto__btn-card {
-    margin-top: 10px;
-    font-size: 1.5rem;
-    width: 15vw;
-    max-width: 300px;
-    padding: 10px 0 10px 0; }
-  .card-producto p {
-    font-size: 2rem; }
-
-.container-btn-principal {
-  width: 100vw;
+#contenedor-productos {
+  max-width: 1200px;
+  margin: 60px auto;
   display: flex;
-  justify-content: center; }
-  .container-btn-principal .borrar {
-    max-width: 150px;
-    height: 50px;
-    font-size: 1rem;
-    justify-self: right; }
+  justify-content: space-between;
+  flex-wrap: wrap; }
+
+.select {
+  margin-top: 100px;
+  margin-left: 60x; }
+
+#boton-carrito {
+  min-width: 100px;
+  height: 40px;
+  margin-right: 50px; }
+  #boton-carrito #contadorCarrito {
+    margin-left: 20px;
+    font-weight: 500;
+    color: red; }
+  #boton-carrito i {
+    color: black; }
+
+.boton-eliminar {
+  min-width: 100px; }

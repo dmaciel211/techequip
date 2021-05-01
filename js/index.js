@@ -38,11 +38,12 @@ function mostrarProductos(array) {
     
         let div = document.createElement('div')
         div.classList.add('producto')
-        div.innerHTML = `
+        div.classList.add('container-fluid')
+              div.innerHTML = `
                     <img class="img-fluid" src=${producto.imagen} alt="">
                     <h3>${producto.descripcion}</h3>
                     <p class="precioProducto">Precio: $${producto.precio}</p>
-                    <button onclick=agregarAlCarrito(${producto.id}) class="boton-agregar">Agregar <i class="fas fa-cart-plus"></i></button>
+                    <div class="container-btn-del"><button onclick=agregarAlCarrito(${producto.id}) class="boton-agregar center">Agregar <i class="fas fa-cart-plus"></i></button></div>
         `
         contenedorProductos.appendChild(div)
     
@@ -92,13 +93,18 @@ function actualizarCarrito() {
                 <p>${producto.descripcion}</p>
                 <img class="img-fluid" style="max-height:100px" src=${producto.imagen} alt="">
                 <p>Precio: $${producto.precio}</p>
-                <button onclick=eli minarProducto(${producto.id})  class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+                <button onclick=eliminarProducto(${producto.id})  class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
             </div>
         `
     })
+ 
 
     precioTotal.innerText = carrito.reduce( (acc, el) => acc += el.precio, 0 )
+    if (carrito.length!==0){
     contadorCarrito.innerText = carrito.length
+}else{
+    contadorCarrito.innerText = "0"
+}
 
     localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerText))
     localStorage.setItem('total', JSON.stringify(precioTotal.innerText))
@@ -133,9 +139,10 @@ ordenPrecios.addEventListener('change', ()=>{
 
 function borrarCarrito(){
     localStorage.clear()
-    contadorCarrito.innerText = ''
+    contadorCarrito.innerText = '0'
     contenedorCarrito.innerHTML= ''
     precioTotal.innerText = ''
     carrito = []
-       }
+    alert('Su carrito ha sido eliminado')
+           }
 
