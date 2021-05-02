@@ -157,6 +157,7 @@ function actualizarCarrito() {
 const botonPromo = document.getElementById('boton-promo')
 
 function promo(id){
+    productos = productosOriginal
     let promo = productos.filter(el => el.id === id )
     mostrarProductos(promo)
 }
