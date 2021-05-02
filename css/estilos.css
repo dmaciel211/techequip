@@ -6,6 +6,35 @@ body {
   margin: 0;
   padding: 0; }
 
+.btn:hover {
+  background-color: white;
+  color: black; }
+
+.btn a:hover {
+  color: black; }
+
+.banner {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: black;
+  min-height: 250px; }
+  .banner #boton-promo {
+    top: 40vw;
+    right: 35vw;
+    z-index: 100;
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    text-decoration: none; }
+    .banner #boton-promo a {
+      font-size: 1em;
+      color: white; }
+      .banner #boton-promo a:link, .banner #boton-promo a:visited, .banner #boton-promo a:active {
+        text-decoration: none; }
+      .banner #boton-promo a:hover {
+        color: black; }
+
 .producto {
   max-width: 30%;
   padding: 10px;
@@ -27,11 +56,9 @@ body {
     justify-content: center;
     width: 100%; }
     .producto .container-btn-del .boton-agregar {
-      width: 9vw;
-      min-width: 100px;
-      height: 40px; }
-      .producto .container-btn-del .boton-agregar:hover {
-        background-color: wheat; }
+      font-size: 1em;
+      max-width: fit-content;
+      padding: 0%; }
 
 #contenedor-productos {
   max-width: 1200px;
@@ -40,9 +67,13 @@ body {
   justify-content: space-between;
   flex-wrap: wrap; }
 
-.select {
-  margin-top: 100px;
-  margin-left: 60x; }
+.filtros {
+  margin-top: 50px;
+  margin-left: 5px;
+  display: flex;
+  flex-flow: row wrap; }
+  .filtros div {
+    padding-right: 30px; }
 
 #boton-carrito {
   min-width: 100px;
@@ -51,9 +82,12 @@ body {
   #boton-carrito #contadorCarrito {
     margin-left: 20px;
     font-weight: 500;
-    color: red; }
+    color: white; }
   #boton-carrito i {
     color: black; }
 
 .boton-eliminar {
   min-width: 100px; }
+
+.carrito-contenedor {
+  display: flex; }
