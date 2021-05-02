@@ -14,14 +14,13 @@ body {
   color: black; }
 
 .banner {
-  display: flex;
   justify-content: center;
   align-content: center;
   background-color: black;
-  min-height: 250px; }
+  min-height: 300px; }
   .banner #boton-promo {
-    top: 40vw;
-    right: 35vw;
+    top: 40%;
+    left: 30%;
     z-index: 100;
     position: absolute;
     height: fit-content;
