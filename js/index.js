@@ -121,19 +121,22 @@ function actualizarCarrito() {
 
 
         contenedorCarrito.innerHTML += `
-            <div class="productoEnCarrito">
-                <p>${producto.descripcion}</p>
-                <img class="img-fluid" style="max-height:100px" src=${producto.imagen} alt="">
-                <p>Precio: $${producto.precio}</p>
-                <p>Cantidad: ${producto.cantidad}</p>
-                <button onclick=eliminarProducto(${producto.id})  class="boton-eliminar btn btn-secondary"><i class="fas fa-trash-alt"></i></button>
+            <div class="productoEnCarrito container">
+            <div class="row">
+
+            
+                <p class=col-5>${producto.descripcion}</p>
+                <p class=col-3>Precio: $${producto.precio}</p>
+                <p class=col-2>Cantidad: ${producto.cantidad}</p>
+                <button onclick=eliminarProducto(${producto.id}) class="boton-eliminar col-1 btn btn-secondary"><i class="fas fa-trash-alt"></i></button>
+                </div>
             </div>
         `
 
     })
 
 
-    precioTotal.innerText = carrito.reduce((acc, el) => acc += el.precio, 0)
+    precioTotal.innerText = contadorLista.reduce((acc, el) => acc += el.precio, 0)
 
 
 
