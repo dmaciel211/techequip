@@ -66,7 +66,6 @@ mostrarProductos(productos)
 //Agregar y actualizar el carrito
 
 
-
 function agregarAlCarrito(id) {
 
     const productoElegido = productos.find(el => el.id == id)
