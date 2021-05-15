@@ -51,7 +51,7 @@ function mostrarProductos(array) {
                     <img class="img-fluid" src=${producto.imagen} alt="">
                     <h3>${producto.descripcion}</h3>
                     <p class="precioProducto">Precio: $${producto.precio}</p>
-                    <div class="container-btn-del"><button onclick=agregarAlCarrito(${producto.id}) class="boton-agregar btn btn-danger center">Agregar <i class="fas fa-cart-plus"></i></button></div>
+                    <div class="container-btn-del"><button onclick="agregarAlCarrito(${producto.id})" ) class="boton-agregar btn btn-danger center">Agregar <i class="fas fa-cart-plus"></i></button></div>
         `
         contenedorProductos.appendChild(div)
 
@@ -64,6 +64,8 @@ mostrarProductos(productos)
 
 
 //Agregar y actualizar el carrito
+
+
 
 function agregarAlCarrito(id) {
 
@@ -105,7 +107,6 @@ function eliminarProducto(id) {
 
 
 
-
 function actualizarCarrito() {
 
     localStorage.setItem('carrito', JSON.stringify(carrito))
@@ -113,15 +114,11 @@ function actualizarCarrito() {
 
     contenedorCarrito.innerHTML = ''
 
-
-
-
-
     carrito.forEach((producto) => {
 
+//JQUERY
 
-
-        contenedorCarrito.innerHTML += `
+        $('#carrito-contenedor').prepend(`
             <div class="productoEnCarrito container">
             <div class="row">
 
@@ -132,7 +129,7 @@ function actualizarCarrito() {
                 <button onclick=eliminarProducto(${producto.id}) class="boton-eliminar col-1 btn btn-secondary"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
-        `
+        `)
 
     })
 
@@ -183,6 +180,8 @@ ordenPrecios.addEventListener('change', () => {
 
 //Filtrar por tipo de producto
 
+//JQUERY
+
 const tipoProducto = document.getElementById('tipo-producto')
 
 tipoProducto.addEventListener('change', () => {
@@ -213,3 +212,4 @@ function borrarCarrito() {
     alert('Su carrito ha sido eliminado')
     console.log(carrito, carritoEnLS)
 }
+
