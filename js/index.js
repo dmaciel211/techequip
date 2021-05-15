@@ -2,6 +2,7 @@
 const contenedorProductos = document.getElementById('contenedor-productos')
 let carrito = []
 let contadorLista = []
+let listaFiltrada = []
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const precioTotal = document.getElementById('precioTotal')
 const contadorCarrito = document.getElementById('contadorCarrito')
@@ -136,12 +137,12 @@ function actualizarCarrito() {
     })
 
 
-    precioTotal.innerText = contadorLista.reduce((acc, el) => acc += el.precio, 0)
+    precioTotal.innerText = carrito.reduce( (acc, el) => acc + ( el.precio * el.cantidad ), 0 )
 
 
 
     if (contadorLista.length !== 0) {
-        contadorCarrito.innerText = contadorLista.length
+        contadorCarrito.innerText = carrito.reduce( (acc, el) => acc + el.cantidad, 0 )
     } else {
         contadorCarrito.innerText = "0"
     }
@@ -157,9 +158,8 @@ function actualizarCarrito() {
 const botonPromo = document.getElementById('boton-promo')
 
 function promo(id){
-    productos = productosOriginal
-    let promo = productos.filter(el => el.id === id )
-    mostrarProductos(promo)
+    listaFiltrada = productos.filter(el => el.id === id )
+    mostrarProductos(listaFiltrada)
 }
 
 
@@ -169,16 +169,14 @@ const ordenPrecios = document.getElementById('precios')
 
 ordenPrecios.addEventListener('change', () => {
     if (ordenPrecios.value == 1) {
-    
-        productos.sort((a, b) => a.precio - b.precio)
-        mostrarProductos(productos)
+       listaFiltrada.sort((a, b) => a.precio - b.precio)
+        mostrarProductos(listaFiltrada)
     } else if (ordenPrecios.value == 2) {
-        productos.sort((a, b) => b.precio - a.precio)
-        mostrarProductos(productos)
+        listaFiltrada.sort((a, b) => b.precio - a.precio)
+        mostrarProductos(listaFiltrada)
     } else {
-        productos.sort((a, b) => a.id - b.id)
-        productos = productosOriginal
-        mostrarProductos(productos)
+       listaFiltrada = productos.sort((a, b) => a.id - b.id)
+       mostrarProductos(listaFiltrada)
     }
 })
 
@@ -191,14 +189,12 @@ tipoProducto.addEventListener('change', () => {
    
 
     if (tipoProducto.value === "all") {
-        productos = productosOriginal
-             mostrarProductos(productos)}
+        listaFiltrada = productos   
+             mostrarProductos(listaFiltrada)}
 
         else{
-            productos = productosOriginal
-            let filtrado = productos.filter(el => el.tipo === tipoProducto.value )
-            productos = filtrado
-                     mostrarProductos(filtrado)
+             listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value )
+             mostrarProductos(listaFiltrada)
         }
     
 })
