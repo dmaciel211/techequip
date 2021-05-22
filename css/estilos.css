@@ -34,37 +34,32 @@ body {
       .banner #boton-promo a:hover {
         color: black; }
 
-.producto {
-  max-width: 30%;
-  padding: 10px;
-  margin-bottom: 20px;
-  box-shadow: 2px 6px 3px 3px rgba(0, 0, 0, 0.3);
-  position: relative;
-  padding-bottom: 70px; }
-  .producto h3 {
-    font-size: 2.1vw;
-    width: 100%; }
-  .producto p {
-    font-size: 2vw; }
-  .producto .container-btn-del {
-    position: absolute;
-    bottom: 30px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-items: center;
-    justify-content: center;
-    width: 100%; }
-    .producto .container-btn-del .boton-agregar {
-      font-size: 1em;
-      max-width: fit-content;
-      padding: 0%; }
-
 #contenedor-productos {
-  max-width: 1200px;
-  margin: 60px auto;
+  justify-content: space-evenly;
+  margin-bottom: 100px; }
+
+.producto {
+  position: relative;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap; }
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 300px;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: .1875rem;
+  margin: 10px;
+  text-align: center; }
+
+.prod-img img {
+  max-width: 250px;
+  padding: 10px; }
+
+.prod-btn button {
+  margin-bottom: 5px; }
 
 .filtros {
   margin-top: 50px;
@@ -75,7 +70,7 @@ body {
     padding-right: 30px; }
 
 #boton-carrito {
-  min-width: 100px;
+  min-width: 50px;
   height: 40px;
   margin-right: 50px; }
   #boton-carrito #contadorCarrito {
@@ -87,3 +82,15 @@ body {
 
 .boton-eliminar {
   min-width: 100px; }
+
+footer {
+  background-color: gray; }
+
+/*MEDIA query*/
+@media only screen and (max-width: 550px) {
+  .navbar-brand img {
+    height: 40px; } }
+
+@media only screen and (min-width: 550px) {
+  .producto {
+    width: 30%; } }

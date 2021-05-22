@@ -2,7 +2,7 @@
 const contenedorProductos = document.getElementById('contenedor-productos')
 let carrito = []
 let contadorLista = []
-let listaFiltrada = []
+let listaFiltrada = productos
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const precioTotal = document.getElementById('precioTotal')
 const contadorCarrito = document.getElementById('contadorCarrito')
@@ -46,12 +46,23 @@ function mostrarProductos(array) {
 
         let div = document.createElement('div')
         div.classList.add('producto')
-        div.classList.add('container-fluid')
+        div.classList.add('col-m-4')
+        div.classList.add('col-sm-12')
+        div.classList.add('container')
+        
         div.innerHTML = `
+                    <div class="row prod-img">
                     <img class="img-fluid" src=${producto.imagen} alt="">
+                    </div>
+                    <div class="row prod-desc">
                     <h3>${producto.descripcion}</h3>
+                    </div>
+                    <div class="row prod-precio">
                     <p class="precioProducto">Precio: $${producto.precio}</p>
+                    </div>
+                    <div class="row prod-btn">
                     <div class="container-btn-del"><button onclick="agregarAlCarrito(${producto.id})" ) class="boton-agregar btn btn-danger center">Agregar <i class="fas fa-cart-plus"></i></button></div>
+                    </div>  
         `
         contenedorProductos.appendChild(div)
 
@@ -64,6 +75,7 @@ mostrarProductos(productos)
 
 
 //Agregar y actualizar el carrito
+
 
 
 function agregarAlCarrito(id) {
@@ -177,12 +189,18 @@ ordenPrecios.addEventListener('change', () => {
 })
 
 
+
+
+
 //Filtrar por tipo de producto
 
-//JQUERY
+
+
+
 
 const tipoProducto = document.getElementById('tipo-producto')
 
+function filtrarTipo(){
 tipoProducto.addEventListener('change', () => {
    
 
@@ -195,7 +213,10 @@ tipoProducto.addEventListener('change', () => {
              mostrarProductos(listaFiltrada)
         }
     
-})
+})}
+
+filtrarTipo()
+
 
 
 
@@ -211,4 +232,6 @@ function borrarCarrito() {
     alert('Su carrito ha sido eliminado')
     console.log(carrito, carritoEnLS)
 }
+
+
 
