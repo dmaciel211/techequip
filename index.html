@@ -53,15 +53,17 @@
 
   <main class="container-fluid">
 
-    <div class="container-fluid banner">
-      <img src="/img/promo/promo.jpg" style="margin-top: 100px" class="img-fluid" alt="">
-      <button id="boton-promo" class="btn btn-danger" onclick="promo(12)"><a href="#referencia">Comprar
+    <div class="banner">
+      <img src="/img/promo/promo.jpg" class="img-banner" alt="">
+      <div class="overlay-banner">
+      <button id="boton-promo" class="btn btn-danger" onclick="promo(12)"><a class="link-promo" href="#referencia">Comprar
           ahora</a></button>
+        </div>
     </div>
 
 
     <div class="filtros row">
-      <div class="col-l-2 col-sm-12">
+      <div class="col-lg-2 col-sm-12">
         <h4>Precio</h4>
         <select id="precios">
           <option value="all">Todos</option>
@@ -69,7 +71,7 @@
           <option value="2">De mayor a menor</option>
         </select>
       </div>
-      <div class="col-l-2 col-sm-12">
+      <div class="col-lg-2 col-sm-12">
         <h4>Tipo de producto</h4>
         <select id="tipo-producto">
           <option value="all">Todos</option>
@@ -84,6 +86,7 @@
       </div>
       <div class="col-m-8 col-sm-12"></div>
 
+      <div id="dolar"></div>
     </div>
 
 
@@ -164,7 +167,9 @@
           <div class="modal-body" id="carrito-contenedor">
             ...
           </div>
-          <p class="precioProducto">Precio total: $<span id="precioTotal"></span></p>
+          <p class="precioTotal">Precio total: $<span id="Total"></span></p>
+          <p class="precioDolarBlue">Precio USD Blue: $<span id="usdBlue"></span></p>
+          <p >Tipo de cambio: 1 USD = <span id="tc"> </span> AR$</p>
           <div class="modal-footer">
             <button onclick="borrarCarrito()" data-bs-dismiss="modal" class="boton-eliminar btn btn-secondary"><i
                 class="fas fa-trash-alt"></i></button>

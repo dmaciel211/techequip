@@ -4,7 +4,7 @@ let carrito = []
 let contadorLista = []
 let listaFiltrada = productos
 const contenedorCarrito = document.getElementById('carrito-contenedor')
-const precioTotal = document.getElementById('precioTotal')
+const precioTotal = document.getElementById('Total')
 const contadorCarrito = document.getElementById('contadorCarrito')
 
 
@@ -49,7 +49,7 @@ function mostrarProductos(array) {
         div.classList.add('col-m-4')
         div.classList.add('col-sm-12')
         div.classList.add('container')
-        
+
         div.innerHTML = `
                     <div class="row prod-img">
                     <img class="img-fluid" src=${producto.imagen} alt="">
@@ -58,7 +58,7 @@ function mostrarProductos(array) {
                     <h3>${producto.descripcion}</h3>
                     </div>
                     <div class="row prod-precio">
-                    <p class="precioProducto">Precio: $${producto.precio}</p>
+                    <p class="precioProducto"> $${producto.precio}</p>
                     </div>
                     <div class="row prod-btn">
                     <div class="container-btn-del"><button onclick="agregarAlCarrito(${producto.id})" ) class="boton-agregar btn btn-danger center">Agregar <i class="fas fa-cart-plus"></i></button></div>
@@ -88,12 +88,11 @@ function agregarAlCarrito(id) {
         contadorLista.push(productoElegido)
         const repetido = carrito.find(el => el.id == productoElegido.id)
         const indice = carrito.indexOf(repetido)
-        console.log(indice)
 
         //Si se repite solo sumar cantidad
         if (repetido) {
             carrito[indice].cantidad++
-            console.log(carrito);
+
 
         }
         //Si no se repite agregar al carrito con cantidad 1
@@ -124,10 +123,11 @@ function actualizarCarrito() {
 
 
     contenedorCarrito.innerHTML = ''
+    totalCarrito()
 
     carrito.forEach((producto) => {
 
-//JQUERY
+        //JQUERY
 
         $('#carrito-contenedor').prepend(`
             <div class="productoEnCarrito container">
@@ -142,15 +142,51 @@ function actualizarCarrito() {
             </div>
         `)
 
+
     })
 
 
-    precioTotal.innerText = carrito.reduce( (acc, el) => acc + ( el.precio * el.cantidad ), 0 )
+    function totalCarrito() {
+        let totalCarrito = carrito.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
+        precioTotal.innerText = totalCarrito
+        
+        $.get(URLGET, function (respuesta, estado) {
+                if (estado === "success") {
+
+                    let misDatos = respuesta;
+                    console.log(misDatos)
+                    let [dolarBlue] = misDatos
+                    console.log(totalCarrito)
+                    let usdBlue = (totalCarrito / parseFloat(dolarBlue.casa.venta)).toFixed(0)
+                    let tipoDeCambio = parseFloat(dolarBlue.casa.venta)
+
+                    console.log(parseFloat(dolarBlue.casa.venta))
+
+
+
+
+                    $("#usdBlue").empty()
+                    $("#tc").empty()
+
+                    $("#usdBlue").prepend(`${usdBlue}`)
+                    $("#tc").prepend(`${tipoDeCambio}`)
+
+
+                }
+
+            }
+
+
+        );
+       
+    }
+
+
 
 
 
     if (contadorLista.length !== 0) {
-        contadorCarrito.innerText = carrito.reduce( (acc, el) => acc + el.cantidad, 0 )
+        contadorCarrito.innerText = carrito.reduce((acc, el) => acc + el.cantidad, 0)
     } else {
         contadorCarrito.innerText = "0"
     }
@@ -161,12 +197,12 @@ function actualizarCarrito() {
     localStorage.setItem('contadorLista', JSON.stringify(contadorLista))
 
 
-
-}//Boton Promo
+}
+//Boton Promo
 const botonPromo = document.getElementById('boton-promo')
 
-function promo(id){
-    listaFiltrada = productos.filter(el => el.id === id )
+function promo(id) {
+    listaFiltrada = productos.filter(el => el.id === id)
     mostrarProductos(listaFiltrada)
 }
 
@@ -177,14 +213,14 @@ const ordenPrecios = document.getElementById('precios')
 
 ordenPrecios.addEventListener('change', () => {
     if (ordenPrecios.value == 1) {
-       listaFiltrada.sort((a, b) => a.precio - b.precio)
+        listaFiltrada.sort((a, b) => a.precio - b.precio)
         mostrarProductos(listaFiltrada)
     } else if (ordenPrecios.value == 2) {
         listaFiltrada.sort((a, b) => b.precio - a.precio)
         mostrarProductos(listaFiltrada)
     } else {
-       listaFiltrada = productos.sort((a, b) => a.id - b.id)
-       mostrarProductos(listaFiltrada)
+        listaFiltrada = productos.sort((a, b) => a.id - b.id)
+        mostrarProductos(listaFiltrada)
     }
 })
 
@@ -200,20 +236,20 @@ ordenPrecios.addEventListener('change', () => {
 
 const tipoProducto = document.getElementById('tipo-producto')
 
-function filtrarTipo(){
-tipoProducto.addEventListener('change', () => {
-   
+function filtrarTipo() {
+    tipoProducto.addEventListener('change', () => {
 
-    if (tipoProducto.value === "all") {
-        listaFiltrada = productos   
-             mostrarProductos(listaFiltrada)}
 
-        else{
-             listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value )
-             mostrarProductos(listaFiltrada)
+        if (tipoProducto.value === "all") {
+            listaFiltrada = productos
+            mostrarProductos(listaFiltrada)
+        } else {
+            listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value)
+            mostrarProductos(listaFiltrada)
         }
-    
-})}
+
+    })
+}
 
 filtrarTipo()
 
@@ -230,8 +266,14 @@ function borrarCarrito() {
     precioTotal.innerText = ''
     carrito = []
     alert('Su carrito ha sido eliminado')
-    console.log(carrito, carritoEnLS)
+
 }
 
 
 
+
+
+//GET AJAX
+
+const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+//Agregamos un botón con jQuery
