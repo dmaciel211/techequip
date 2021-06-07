@@ -24,7 +24,7 @@ if (carritoEnLS) {
     if (continuar == true) {
         carrito = carritoEnLS
         contadorCarrito.innerText = contadorEnLs
-        contenedorCarrito.innerText = contenedorEnLs
+        contenedorCarrito.innerHTML = contenedorEnLs
         precioTotal.innerText = totalEnLs
         contadorLista = contadorListaEnLS
 
@@ -121,8 +121,9 @@ function actualizarCarrito() {
 
     localStorage.setItem('carrito', JSON.stringify(carrito))
 
+    contenedorCarrito.innerHTML = ""
 
-    contenedorCarrito.innerHTML = ''
+    
     totalCarrito()
 
     carrito.forEach((producto) => {
@@ -141,139 +142,151 @@ function actualizarCarrito() {
                 </div>
             </div>
         `)
+        localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerHTML))
 
-
-    })
+    }) }
 
 
     function totalCarrito() {
         let totalCarrito = carrito.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
         precioTotal.innerText = totalCarrito
-        
+
         $.get(URLGET, function (respuesta, estado) {
                 if (estado === "success") {
-
                     let misDatos = respuesta;
-                    console.log(misDatos)
-                    let [dolarBlue] = misDatos
-                    console.log(totalCarrito)
+                    let [dolarOficial, dolarBlue] = misDatos
                     let usdBlue = (totalCarrito / parseFloat(dolarBlue.casa.venta)).toFixed(0)
-                    let tipoDeCambio = parseFloat(dolarBlue.casa.venta)
-
-                    console.log(parseFloat(dolarBlue.casa.venta))
-
-
-
-
-                    $("#usdBlue").empty()
+                    let tipoDeCambioBlue = parseFloat(dolarBlue.casa.venta)
+                    let usdOficial = (totalCarrito / parseFloat(dolarOficial.casa.venta)).toFixed(0)
+                    let tipoDeCambioOficial = parseFloat(dolarOficial.casa.venta)
+                    const opcdolar = document.getElementById('tipoDeCambio')
+                    $("#usd").empty()
                     $("#tc").empty()
 
-                    $("#usdBlue").prepend(`${usdBlue}`)
-                    $("#tc").prepend(`${tipoDeCambio}`)
+                    opcdolar.addEventListener('change', () => {
+
+                        if (opcdolar.value == 2) {
+                            $("#usd").empty()
+                            $("#tc").empty()
+                            $("#usd").prepend(`${usdBlue}`)
+                            $("#tc").prepend(`${tipoDeCambioBlue}`)
+
+                            
+                        } else {
+
+                            $("#usd").empty()
+                            $("#tc").empty()
+                            $("#usd").prepend(`${usdOficial}`)
+                            $("#tc").prepend(`${tipoDeCambioOficial}`)
+                        }
+
+                    })
 
 
                 }
 
+
             }
 
 
-        );
-       
-    }
+        )
 
 
 
 
-
-    if (contadorLista.length !== 0) {
-        contadorCarrito.innerText = carrito.reduce((acc, el) => acc + el.cantidad, 0)
-    } else {
-        contadorCarrito.innerText = "0"
-    }
-
-    localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerText))
-    localStorage.setItem('total', JSON.stringify(precioTotal.innerText))
-    localStorage.setItem('contador', JSON.stringify(contadorCarrito.innerText))
-    localStorage.setItem('contadorLista', JSON.stringify(contadorLista))
-
-
-}
-//Boton Promo
-const botonPromo = document.getElementById('boton-promo')
-
-function promo(id) {
-    listaFiltrada = productos.filter(el => el.id === id)
-    mostrarProductos(listaFiltrada)
-}
-
-
-//Filtrar por precios
-
-const ordenPrecios = document.getElementById('precios')
-
-ordenPrecios.addEventListener('change', () => {
-    if (ordenPrecios.value == 1) {
-        listaFiltrada.sort((a, b) => a.precio - b.precio)
-        mostrarProductos(listaFiltrada)
-    } else if (ordenPrecios.value == 2) {
-        listaFiltrada.sort((a, b) => b.precio - a.precio)
-        mostrarProductos(listaFiltrada)
-    } else {
-        listaFiltrada = productos.sort((a, b) => a.id - b.id)
-        mostrarProductos(listaFiltrada)
-    }
-})
-
-
-
-
-
-//Filtrar por tipo de producto
-
-
-
-
-
-const tipoProducto = document.getElementById('tipo-producto')
-
-function filtrarTipo() {
-    tipoProducto.addEventListener('change', () => {
-
-
-        if (tipoProducto.value === "all") {
-            listaFiltrada = productos
-            mostrarProductos(listaFiltrada)
+        if (contadorLista.length !== 0) {
+            contadorCarrito.innerText = carrito.reduce((acc, el) => acc + el.cantidad, 0)
         } else {
-            listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value)
-            mostrarProductos(listaFiltrada)
+            contadorCarrito.innerText = "0"
         }
 
+ 
+        localStorage.setItem('total', JSON.stringify(precioTotal.innerText))
+        localStorage.setItem('contador', JSON.stringify(contadorCarrito.innerText))
+        localStorage.setItem('contadorLista', JSON.stringify(contadorLista))
+
+
+    }
+
+
+
+
+
+    //Boton Promo
+    const botonPromo = document.getElementById('boton-promo')
+
+    function promo(id) {
+        listaFiltrada = productos.filter(el => el.id === id)
+        mostrarProductos(listaFiltrada)
+    }
+
+
+    //Filtrar por precios
+
+    const ordenPrecios = document.getElementById('precios')
+
+    ordenPrecios.addEventListener('change', () => {
+        if (ordenPrecios.value == 1) {
+            listaFiltrada.sort((a, b) => a.precio - b.precio)
+            mostrarProductos(listaFiltrada)
+        } else if (ordenPrecios.value == 2) {
+            listaFiltrada.sort((a, b) => b.precio - a.precio)
+            mostrarProductos(listaFiltrada)
+        } else {
+            listaFiltrada = productos.sort((a, b) => a.id - b.id)
+            mostrarProductos(listaFiltrada)
+        }
     })
-}
-
-filtrarTipo()
-
-
-
-
-//Borrar carrito
-
-function borrarCarrito() {
-    localStorage.clear()
-    contadorCarrito.innerText = '0'
-    contadorLista = []
-    contenedorCarrito.innerHTML = ''
-    precioTotal.innerText = ''
-    carrito = []
-    alert('Su carrito ha sido eliminado')
-
-}
 
 
 
 
 
-//GET AJAX
+    //Filtrar por tipo de producto
 
-const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
-//Agregamos un botón con jQuery
+
+
+
+
+    const tipoProducto = document.getElementById('tipo-producto')
+
+    function filtrarTipo() {
+        tipoProducto.addEventListener('change', () => {
+
+
+            if (tipoProducto.value === "all") {
+                listaFiltrada = productos
+                mostrarProductos(listaFiltrada)
+            } else {
+                listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value)
+                mostrarProductos(listaFiltrada)
+            }
+
+        })
+    }
+
+    filtrarTipo()
+
+
+
+
+    //Borrar carrito
+
+    function borrarCarrito() {
+        localStorage.clear()
+        contadorCarrito.innerText = '0'
+        contadorLista = []
+        contenedorCarrito.innerHTML = ''
+        precioTotal.innerText = ''
+        carrito = []
+        alert('Su carrito ha sido eliminado')
+
+    }
+
+
+
+
+
+    //GET AJAX
+
+    const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"

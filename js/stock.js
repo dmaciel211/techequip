@@ -1,7 +1,5 @@
 
 
-
-
 let productos = [{
     id: 1,
     descripcion: "Motherboard Asrock B450",
@@ -157,4 +155,3 @@ let productos = [{
     imagen: '/img/gabo/gabo_cougar_conqueraluminium_custom.jpg',
     cantidad: 1
 }]
-

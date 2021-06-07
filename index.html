@@ -168,12 +168,17 @@
             ...
           </div>
           <p class="precioTotal">Precio total: $<span id="Total"></span></p>
-          <p class="precioDolarBlue">Precio USD Blue: $<span id="usdBlue"></span></p>
+          <select name="cambio" id="tipoDeCambio">
+            <option selected disabled>Elegí un tipo de cambio</option>
+            <option value="1">Dólar oficial</option>
+            <option  value="2">Dólar blue</option>
+          </select>
+          <p class="precioDolar">Precio USD: $<span id="usd"></span></p>
           <p >Tipo de cambio: 1 USD = <span id="tc"> </span> AR$</p>
           <div class="modal-footer">
             <button onclick="borrarCarrito()" data-bs-dismiss="modal" class="boton-eliminar btn btn-secondary"><i
                 class="fas fa-trash-alt"></i></button>
-            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Volver atrás</button>
+            <button type="button" class="bwtn btn-dark" data-bs-dismiss="modal">Volver atrás</button>
             <button type="button" class="btn btn-danger">Completar compra</button>
           </div>
         </div>
