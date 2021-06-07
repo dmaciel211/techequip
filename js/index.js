@@ -151,6 +151,10 @@ function actualizarCarrito() {
         let totalCarrito = carrito.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
         precioTotal.innerText = totalCarrito
 
+    //GET API
+
+    const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+
         $.get(URLGET, function (respuesta, estado) {
                 if (estado === "success") {
                     let misDatos = respuesta;
@@ -239,14 +243,7 @@ function actualizarCarrito() {
     })
 
 
-
-
-
     //Filtrar por tipo de producto
-
-
-
-
 
     const tipoProducto = document.getElementById('tipo-producto')
 
@@ -284,9 +281,34 @@ function actualizarCarrito() {
     }
 
 
+//Finalizar Compra
+const keyMp = "TEST-6662049962047613-060705-6de103c1359088fb1515ac3739b4bd10-93400406"
 
+const finalizarCompra=()=>{
 
+    const carritoParaMp =  carrito.map (el => ({
+        title: el.descripcion,
+        description: "",
+        picture_url: el.imagen,
+        category_id: el.id,
+        quantity: el.cantidad,
+        currency_id: "ARS",
+        unit_price: el.precio
 
-    //GET AJAX
+    })
+        )
 
-    const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
+    
+
+    fetch('https://api.mercadopago.com/checkout/preferences', {
+    method: "POST",
+    headers: {
+        Authorization: 'Bearer TEST-6662049962047613-060705-6de103c1359088fb1515ac3739b4bd10-93400406'
+    },
+    body: JSON.stringify({
+        items: carritoParaMp,
+    })
+}).then(resp  => resp.json()).then(data =>
+    window.open(data.init_point, "_blank")
+)
+}
