@@ -167,6 +167,7 @@
           <div class="modal-body" id="carrito-contenedor">
             ...
           </div>
+          <div id="botonera">
           <p class="precioTotal">Precio total: $<span id="Total"></span></p>
           <select name="cambio" id="tipoDeCambio">
             <option selected disabled>Elegí un tipo de cambio</option>
@@ -178,8 +179,9 @@
           <div class="modal-footer">
             <button onclick="borrarCarrito()" data-bs-dismiss="modal" class="boton-eliminar btn btn-secondary"><i
                 class="fas fa-trash-alt"></i></button>
-            <button type="button" class="bwtn btn-dark" data-bs-dismiss="modal">Volver atrás</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Volver atrás</button>
             <button type="button" onclick="finalizarCompra()" class="btn btn-danger">Completar compra</button>
+          </div>
           </div>
         </div>
       </div>

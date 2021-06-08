@@ -311,4 +311,15 @@ const finalizarCompra=()=>{
 }).then(resp  => resp.json()).then(data =>
     window.open(data.init_point, "_blank")
 )
+
+let botonera = document.getElementById('botonera') 
+let tituloModal = document.getElementById('exampleModalLabel')
+tituloModal.innerHTML = ""
+contenedorCarrito.innerHTML = ""
+botonera.innerHTML = ""
+
+ $('#carrito-contenedor').prepend('<h3>Gracias por tu compra.</h3>')
+
+
+
 }
