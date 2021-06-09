@@ -111,7 +111,7 @@ function agregarAlCarrito(id) {
         });
         //Select item image and pass to the function
         var itemImg = $(this).parent().find('img').eq(0);
-        flyToElement($(prodVolar), );
+        flyToElement($(prodVolar),$("#botonCarrito") );
     });
 }
 
