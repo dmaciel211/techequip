@@ -102,9 +102,9 @@ function agregarAlCarrito(id) {
             carrito.push(productoElegido)
         }
     }
-
+    let prodVolar = document.getElementById('img${productoElegido.id}')
     actualizarCarrito()
-    volar(productoElegido.imagen,contadorCarrito)
+    volar(prodVolar,contadorCarrito)
 }
 
 function eliminarProducto(id) {
