@@ -102,17 +102,11 @@ function agregarAlCarrito(id) {
             carrito.push(productoElegido)
         }
     }
-    let prodVolar = document.getElementById('img${productoElegido.id}')
+  
     
     actualizarCarrito()
     
-    $('html, body').animate({
-            'scrollTop' : $("#botonCarrito").position().top
-        });
-        //Select item image and pass to the function
-        var itemImg = $(this).parent().find('img').eq(0);
-        flyToElement($(prodVolar),$("#botonCarrito"));
-   
+     
 }
 
 function eliminarProducto(id) {
