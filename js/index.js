@@ -5,6 +5,7 @@ let contadorLista = []
 let listaFiltrada = productos
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const precioTotal = document.getElementById('Total')
+const botonera = document.getElementById('botonera') 
 const contadorCarrito = document.getElementById('contadorCarrito')
 
 
@@ -143,6 +144,7 @@ function actualizarCarrito() {
             </div>
         `)
         localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerHTML))
+        botonera.style.display = "initial"
         
         
        
@@ -314,7 +316,7 @@ const finalizarCompra=()=>{
     window.open(data.init_point, "_blank")
 )
 
-let botonera = document.getElementById('botonera') 
+
 let tituloModal = document.getElementById('exampleModalLabel')
 tituloModal.innerHTML = ""
 contenedorCarrito.innerHTML = ""
@@ -329,5 +331,7 @@ contenedorCarrito.innerHTML = ""
     carrito = []
      $("#usd").empty()
      $("#tc").empty()
+    
+    botonera.style.display = "none"
 
 }
