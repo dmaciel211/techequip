@@ -52,7 +52,7 @@ function mostrarProductos(array) {
         div.classList.add('container')
 
         div.innerHTML = `
-                    <div class="row prod-img">
+                    <div id='img${producto.id}' class="row prod-img">
                     <img class="img-fluid" src=${producto.imagen} alt="">
                     </div>
                     <div class="row prod-desc">
