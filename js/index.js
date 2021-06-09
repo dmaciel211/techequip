@@ -103,8 +103,16 @@ function agregarAlCarrito(id) {
         }
     }
     let prodVolar = document.getElementById('img${productoElegido.id}')
+    
     actualizarCarrito()
-    volar(prodVolar,contadorCarrito)
+    
+    $('html, body').animate({
+            'scrollTop' : $("#botonCarrito").position().top
+        });
+        //Select item image and pass to the function
+        var itemImg = $(this).parent().find('img').eq(0);
+        flyToElement($(prodVolar), );
+    });
 }
 
 function eliminarProducto(id) {
