@@ -104,6 +104,7 @@ function agregarAlCarrito(id) {
     }
 
     actualizarCarrito()
+    volar(productoElegido.imagen,contadorCarrito)
 }
 
 function eliminarProducto(id) {
