@@ -143,7 +143,9 @@ function actualizarCarrito() {
             </div>
         `)
         localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerHTML))
-
+        
+        
+       
     }) }
 
 
@@ -316,10 +318,17 @@ let botonera = document.getElementById('botonera')
 let tituloModal = document.getElementById('exampleModalLabel')
 tituloModal.innerHTML = ""
 contenedorCarrito.innerHTML = ""
-botonera.innerHTML = ""
+
 
  $('#carrito-contenedor').prepend('<h3>Gracias por tu compra.</h3>')
 
-
+    localStorage.clear()
+    contadorCarrito.innerText = '0'
+    contadorLista = []
+    contenedorCarrito.innerHTML = ''
+    precioTotal.innerText = ''
+    carrito = []
+     $("#usd").empty()
+     $("#tc").empty()
 
 }
