@@ -18,7 +18,8 @@ body {
   justify-content: center;
   position: relative;
   top: 90px;
-  margin-bottom: 100px; }
+  margin-bottom: 100px;
+overflow: hidden;}
 
 .overlay-banner {
   position: absolute;
@@ -95,20 +96,56 @@ body {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: .1875rem;
-  margin: 10px;
-  text-align: center; }
+  margin: 3px;
+  justify-content: center;
+  justify-items: center;
+  text-align: center;
+align-items: center; }
 
-.prod-img img {
+.prod-img {
   max-width: 250px;
   padding: 10px; }
 
-.prod-btn button {
-  margin-bottom: 5px; }
+  .prod-desc{
+    max-height: 50px;
+    font-size: 15px;
+  }
+
+.prod-btn {
+  margin-bottom: 5px;
+max-width: 50%;
+justify-self: center; }
 
 .filtros {
-  margin-top: 200pxx;
+  margin-top: 200px;
   margin-left: 5px;
   margin-bottom: 50px; }
+
+  #carrito-contenedor{
+    padding: 10px 0px 10px px;
+  }
+
+  .productoEnCarrito{
+    padding: 0px 0px 2px 0px;
+    margin: 0px 0px 3px 0px;
+    vertical-align: center;
+    border-bottom: 1px solid black;
+  }
+
+  
+
+  .productoEnCarrito .row{
+    display:flex;
+    flex-flow:row nowrap;
+    text-align: left;
+    align-content: center;
+    align-items:center;
+    }
+  .productoEnCarrito .row .p{
+    max-width: 0.5px;
+
+  }
+
 
 #boton-carrito {
   min-width: 50px;
@@ -120,6 +157,9 @@ body {
     color: white; }
   #boton-carrito i {
     color: black; }
+
+    .boton-eliminar-prod {
+      min-width: 30px; }
 
 .boton-eliminar {
   min-width: 100px; }

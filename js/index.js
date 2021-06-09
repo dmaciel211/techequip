@@ -5,7 +5,7 @@ let contadorLista = []
 let listaFiltrada = productos
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const precioTotal = document.getElementById('Total')
-const botonera = document.getElementById('botonera') 
+const botonera = document.getElementById('botonera')
 const contadorCarrito = document.getElementById('contadorCarrito')
 
 
@@ -52,19 +52,12 @@ function mostrarProductos(array) {
         div.classList.add('container')
 
         div.innerHTML = `
-                    <div id='img${producto.id}' class="row prod-img">
-                    <img class="img-fluid" src=${producto.imagen} alt="">
-                    </div>
-                    <div class="row prod-desc">
-                    <h3>${producto.descripcion}</h3>
-                    </div>
-                    <div class="row prod-precio">
-                    <p class="precioProducto"> $${producto.precio}</p>
-                    </div>
-                    <div class="row prod-btn">
-                    <div class="container-btn-del"><button onclick="agregarAlCarrito(${producto.id})" ) class="boton-agregar btn btn-danger center">Agregar <i class="fas fa-cart-plus"></i></button></div>
-                    </div>  
-        `
+                    
+                    <img id='img${producto.id}' class="prod-img" src=${producto.imagen} alt=""></img>
+                    <h3 class="prod-desc">${producto.descripcion}</h3>
+                    <p class="prod-precio precioProducto"> $${producto.precio}</p>
+                    <button onclick="agregarAlCarrito(${producto.id})") class="container-btn-del prod-btn boton-agregar btn btn-danger center">Agregar <i class="fas fa-cart-plus"></i></button>
+                        `
         contenedorProductos.appendChild(div)
 
     })
@@ -102,11 +95,11 @@ function agregarAlCarrito(id) {
             carrito.push(productoElegido)
         }
     }
-  
-    
+
+
     actualizarCarrito()
-    
-     
+   
+
 }
 
 function eliminarProducto(id) {
@@ -127,7 +120,7 @@ function actualizarCarrito() {
 
     contenedorCarrito.innerHTML = ""
 
-    
+
     totalCarrito()
 
     carrito.forEach((producto) => {
@@ -139,161 +132,162 @@ function actualizarCarrito() {
             <div class="row">
 
             
-                <p class=col-5>${producto.descripcion}</p>
+                <p class=col-4>${producto.descripcion}</p>
                 <p class=col-3>Precio: $${producto.precio}</p>
-                <p class=col-2>Cantidad: ${producto.cantidad}</p>
-                <button onclick=eliminarProducto(${producto.id}) class="boton-eliminar col-1 btn btn-secondary"><i class="fas fa-trash-alt"></i></button>
+                <p class=col-3>Cantidad: ${producto.cantidad}</p>
+                <button onclick=eliminarProducto(${producto.id}) class="boton-eliminar-prod col-1 btn btn-secondary"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
         `)
         localStorage.setItem('contenedor', JSON.stringify(contenedorCarrito.innerHTML))
         botonera.style.display = "initial"
-        
-        
-       
-    }) }
 
 
-    function totalCarrito() {
-        let totalCarrito = carrito.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
-        precioTotal.innerText = totalCarrito
+
+    })
+}
+
+
+function totalCarrito() {
+    let totalCarrito = carrito.reduce((acc, el) => acc + (el.precio * el.cantidad), 0)
+    precioTotal.innerText = totalCarrito
 
     //GET API
 
     const URLGET = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 
-        $.get(URLGET, function (respuesta, estado) {
-                if (estado === "success") {
-                    let misDatos = respuesta;
-                    let [dolarOficial, dolarBlue] = misDatos
-                    let usdBlue = (totalCarrito / parseFloat(dolarBlue.casa.venta)).toFixed(0)
-                    let tipoDeCambioBlue = parseFloat(dolarBlue.casa.venta)
-                    let usdOficial = (totalCarrito / parseFloat(dolarOficial.casa.venta)).toFixed(0)
-                    let tipoDeCambioOficial = parseFloat(dolarOficial.casa.venta)
-                    const opcdolar = document.getElementById('tipoDeCambio')
-                    $("#usd").empty()
-                    $("#tc").empty()
+    $.get(URLGET, function (respuesta, estado) {
+            if (estado === "success") {
+                let misDatos = respuesta;
+                let [dolarOficial, dolarBlue] = misDatos
+                let usdBlue = (totalCarrito / parseFloat(dolarBlue.casa.venta)).toFixed(0)
+                let tipoDeCambioBlue = parseFloat(dolarBlue.casa.venta)
+                let usdOficial = (totalCarrito / parseFloat(dolarOficial.casa.venta)).toFixed(0)
+                let tipoDeCambioOficial = parseFloat(dolarOficial.casa.venta)
+                const opcdolar = document.getElementById('tipoDeCambio')
+                $("#usd").empty()
+                $("#tc").empty()
 
-                    opcdolar.addEventListener('change', () => {
+                opcdolar.addEventListener('change', () => {
 
-                        if (opcdolar.value == 2) {
-                            $("#usd").empty()
-                            $("#tc").empty()
-                            $("#usd").prepend(`${usdBlue}`)
-                            $("#tc").prepend(`${tipoDeCambioBlue}`)
-
-                            
-                        } else {
-
-                            $("#usd").empty()
-                            $("#tc").empty()
-                            $("#usd").prepend(`${usdOficial}`)
-                            $("#tc").prepend(`${tipoDeCambioOficial}`)
-                        }
-
-                    })
+                    if (opcdolar.value == 2) {
+                        $("#usd").empty()
+                        $("#tc").empty()
+                        $("#usd").prepend(`${usdBlue}`)
+                        $("#tc").prepend(`${tipoDeCambioBlue}`)
 
 
-                }
+                    } else {
+
+                        $("#usd").empty()
+                        $("#tc").empty()
+                        $("#usd").prepend(`${usdOficial}`)
+                        $("#tc").prepend(`${tipoDeCambioOficial}`)
+                    }
+
+                })
 
 
             }
 
 
-        )
-
-
-
-
-        if (contadorLista.length !== 0) {
-            contadorCarrito.innerText = carrito.reduce((acc, el) => acc + el.cantidad, 0)
-        } else {
-            contadorCarrito.innerText = "0"
         }
 
- 
-        localStorage.setItem('total', JSON.stringify(precioTotal.innerText))
-        localStorage.setItem('contador', JSON.stringify(contadorCarrito.innerText))
-        localStorage.setItem('contadorLista', JSON.stringify(contadorLista))
+
+    )
 
 
+
+
+    if (contadorLista.length !== 0) {
+        contadorCarrito.innerText = carrito.reduce((acc, el) => acc + el.cantidad, 0)
+    } else {
+        contadorCarrito.innerText = "0"
     }
 
 
+    localStorage.setItem('total', JSON.stringify(precioTotal.innerText))
+    localStorage.setItem('contador', JSON.stringify(contadorCarrito.innerText))
+    localStorage.setItem('contadorLista', JSON.stringify(contadorLista))
+
+
+}
 
 
 
-    //Boton Promo
-    const botonPromo = document.getElementById('boton-promo')
 
-    function promo(id) {
-        listaFiltrada = productos.filter(el => el.id === id)
+
+//Boton Promo
+const botonPromo = document.getElementById('boton-promo')
+
+function promo(id) {
+    listaFiltrada = productos.filter(el => el.id === id)
+    mostrarProductos(listaFiltrada)
+}
+
+
+//Filtrar por precios
+
+const ordenPrecios = document.getElementById('precios')
+
+ordenPrecios.addEventListener('change', () => {
+    if (ordenPrecios.value == 1) {
+        listaFiltrada.sort((a, b) => a.precio - b.precio)
+        mostrarProductos(listaFiltrada)
+    } else if (ordenPrecios.value == 2) {
+        listaFiltrada.sort((a, b) => b.precio - a.precio)
+        mostrarProductos(listaFiltrada)
+    } else {
+        listaFiltrada = productos.sort((a, b) => a.id - b.id)
         mostrarProductos(listaFiltrada)
     }
+})
 
 
-    //Filtrar por precios
+//Filtrar por tipo de producto
 
-    const ordenPrecios = document.getElementById('precios')
+const tipoProducto = document.getElementById('tipo-producto')
 
-    ordenPrecios.addEventListener('change', () => {
-        if (ordenPrecios.value == 1) {
-            listaFiltrada.sort((a, b) => a.precio - b.precio)
-            mostrarProductos(listaFiltrada)
-        } else if (ordenPrecios.value == 2) {
-            listaFiltrada.sort((a, b) => b.precio - a.precio)
+function filtrarTipo() {
+    tipoProducto.addEventListener('change', () => {
+
+
+        if (tipoProducto.value === "all") {
+            listaFiltrada = productos
             mostrarProductos(listaFiltrada)
         } else {
-            listaFiltrada = productos.sort((a, b) => a.id - b.id)
+            listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value)
             mostrarProductos(listaFiltrada)
         }
+
     })
+}
 
-
-    //Filtrar por tipo de producto
-
-    const tipoProducto = document.getElementById('tipo-producto')
-
-    function filtrarTipo() {
-        tipoProducto.addEventListener('change', () => {
-
-
-            if (tipoProducto.value === "all") {
-                listaFiltrada = productos
-                mostrarProductos(listaFiltrada)
-            } else {
-                listaFiltrada = productos.filter(el => el.tipo === tipoProducto.value)
-                mostrarProductos(listaFiltrada)
-            }
-
-        })
-    }
-
-    filtrarTipo()
+filtrarTipo()
 
 
 
 
-    //Borrar carrito
+//Borrar carrito
 
-    function borrarCarrito() {
-        localStorage.clear()
-        contadorCarrito.innerText = '0'
-        contadorLista = []
-        contenedorCarrito.innerHTML = ''
-        precioTotal.innerText = ''
-        carrito = []
-        alert('Su carrito ha sido eliminado')
+function borrarCarrito() {
+    localStorage.clear()
+    contadorCarrito.innerText = '0'
+    contadorLista = []
+    contenedorCarrito.innerHTML = ''
+    precioTotal.innerText = ''
+    carrito = []
+    alert('Su carrito ha sido eliminado')
 
-    }
+}
 
 
 //Finalizar Compra
 const keyMp = "TEST-6662049962047613-060705-6de103c1359088fb1515ac3739b4bd10-93400406"
 
-const finalizarCompra=()=>{
+const finalizarCompra = () => {
 
-    const carritoParaMp =  carrito.map (el => ({
+    const carritoParaMp = carrito.map(el => ({
         title: el.descripcion,
         description: "",
         picture_url: el.imagen,
@@ -302,47 +296,45 @@ const finalizarCompra=()=>{
         currency_id: "ARS",
         unit_price: el.precio
 
-    })
-        )
+    }))
 
-    
+
 
     fetch('https://api.mercadopago.com/checkout/preferences', {
-    method: "POST",
-    headers: {
-        Authorization: 'Bearer TEST-6662049962047613-060705-6de103c1359088fb1515ac3739b4bd10-93400406'
-    },
-    body: JSON.stringify({
-        items: carritoParaMp,
-    })
-}).then(resp  => resp.json()).then(data =>
-    window.open(data.init_point, "_blank")
-)
+        method: "POST",
+        headers: {
+            Authorization: 'Bearer TEST-6662049962047613-060705-6de103c1359088fb1515ac3739b4bd10-93400406'
+        },
+        body: JSON.stringify({
+            items: carritoParaMp,
+        })
+    }).then(resp => resp.json()).then(data =>
+        window.open(data.init_point, "_blank")
+    )
 
 
-let tituloModal = document.getElementById('exampleModalLabel')
-tituloModal.innerHTML = ""
-contenedorCarrito.innerHTML = ""
+    let tituloModal = document.getElementById('exampleModalLabel')
+    tituloModal.innerHTML = ""
+    contenedorCarrito.innerHTML = ""
 
 
- $('#carrito-contenedor').prepend('<h3>Gracias por tu compra.</h3>')
+    $('#carrito-contenedor').prepend('<h3>Gracias por tu compra.</h3>')
 
     localStorage.clear()
     contadorCarrito.innerText = '0'
     contadorLista = []
-     precioTotal.innerText = ''
+    precioTotal.innerText = ''
     carrito = []
-     $("#usd").empty()
-     $("#tc").empty()
-    
+    $("#usd").empty()
+    $("#tc").empty()
+
     botonera.style.display = "none"
-    
- }
+
+}
 
 $("#exampleModal").on("hidden.bs.modal", function () {
-    if( botonera.style.display = "none"){
-        botonera.style.display = "initial" }
-    actualizarCarrito()})
-                
-                 
-                 
+    if (botonera.style.display = "none") {
+        botonera.style.display = "initial"
+    }
+    actualizarCarrito()
+})
