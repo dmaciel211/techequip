@@ -333,5 +333,13 @@ contenedorCarrito.innerHTML = ""
      $("#tc").empty()
     
     botonera.style.display = "none"
+    
+ }
 
-}
+$("#exampleModal").on("hidden.bs.modal", function () {
+    if( botonera.style.display = "none"){
+        botonera.style.display = "initial" }
+    actualizarCarrito()})
+                
+                 
+                 
