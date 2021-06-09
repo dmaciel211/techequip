@@ -325,8 +325,7 @@ contenedorCarrito.innerHTML = ""
     localStorage.clear()
     contadorCarrito.innerText = '0'
     contadorLista = []
-    contenedorCarrito.innerHTML = ''
-    precioTotal.innerText = ''
+     precioTotal.innerText = ''
     carrito = []
      $("#usd").empty()
      $("#tc").empty()
